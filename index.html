@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>アカモンコミュニティ</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      color: #111;
+      background: #f8f5ef;
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1120px, 90%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(248, 245, 239, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 22px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-size: 0.95rem;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      color: #fff;
+      background:
+        linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.52)),
+        url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
+
+    .hero-inner {
+      padding: 110px 0 80px;
+      max-width: 820px;
+    }
+
+    .hero-kicker {
+      font-size: 0.92rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.92;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.08;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .hero p {
+      font-size: 1.06rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #111;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.86;
+    }
+
+    .btn-light {
+      background: #fff;
+      color: #111;
+    }
+
+    .btn-light:hover {
+      opacity: 0.92;
+    }
+
+    section {
+      padding: 100px 0;
+    }
+
+    .section-label {
+      font-size: 0.88rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8a6b3d;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.2;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+
+    .section-description {
+      max-width: 780px;
+      color: #444;
+      margin-bottom: 42px;
+      font-size: 1.02rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.08fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .panel,
+    .card,
+    .profile-box,
+    .price-card,
+    .note-box {
+      background: #fff;
+      border-radius: 24px;
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.04);
+    }
+
+    .panel,
+    .card,
+    .profile-box,
+    .price-card,
+    .note-box {
+      padding: 32px;
+    }
+
+    .panel h3,
+    .card h3,
+    .profile-box h3,
+    .price-card h3,
+    .note-box h3 {
+      margin-bottom: 12px;
+    }
+
+    .panel p,
+    .card p,
+    .profile-box p,
+    .note-box p {
+      color: #444;
+    }
+
+    .card-number {
+      font-size: 0.88rem;
+      color: #8a6b3d;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .dark-section {
+      background: #111;
+      color: #fff;
+    }
+
+    .dark-section .section-label {
+      color: #d5b27a;
+    }
+
+    .dark-section .section-description {
+      color: rgba(255,255,255,0.82);
+    }
+
+    .dark-card {
+      background: #181818;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: none;
+    }
+
+    .dark-card p {
+      color: rgba(255,255,255,0.78);
+    }
+
+    .profile {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .profile-image {
+      border-radius: 28px;
+      overflow: hidden;
+      min-height: 440px;
+      background:
+        linear-gradient(rgba(0,0,0,0.10), rgba(0,0,0,0.18)),
+        url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+    }
+
+    .profile-box h3 {
+      font-size: 2rem;
+    }
+
+    .profile-role {
+      color: #8a6b3d;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .price-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .price-card .price {
+      font-size: clamp(2.3rem, 5vw, 3.8rem);
+      font-weight: 800;
+      margin: 16px 0;
+      line-height: 1;
+    }
+
+    .price-card .price small {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .price-list {
+      list-style: none;
+      margin: 22px 0 28px;
+    }
+
+    .price-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      color: #444;
+    }
+
+    .note-box {
+      margin-top: 36px;
+      background: #f1ece1;
+    }
+
+    .cta-box {
+      text-align: center;
+      padding: 42px 32px;
+      border-radius: 28px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 14px;
+    }
+
+    .cta-box p {
+      max-width: 720px;
+      margin: 0 auto 24px;
+      color: #444;
+    }
+
+    footer {
+      padding: 36px 0;
+      text-align: center;
+      font-size: 0.92rem;
+      color: #666;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      background: #f8f5ef;
+    }
+
+    @media (max-width: 980px) {
+      .two-col,
+      .profile,
+      .price-wrap,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-image {
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        justify-content: flex-start;
+        gap: 14px;
+        font-size: 0.86rem;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-inner {
+        padding: 90px 0 70px;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="logo">AKAMON COMMUNITY</div>
+      <nav>
+        <ul>
+          <li><a href="#about">とは</a></li>
+          <li><a href="#navigated">Navigated by</a></li>
+          <li><a href="#activities">活動内容</a></li>
+          <li><a href="#benefits">得られること</a></li>
+          <li><a href="#murakami">村上隆</a></li>
+          <li><a href="#price">Price</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-kicker">Creative / Strategy / Community</div>
+        <h1>アートと問いで、<br>次の自分に出会う。</h1>
+        <p>
+          アカモンコミュニティは、表現・思考・学び・交流を通じて、
+          自分自身の視野と可能性を拡張していくためのコミュニティです。
+          ただ情報を受け取るだけではなく、考え、話し、行動し、つながることで、
+          日常の解像度を上げていく場を目指します。
+        </p>
+        <div class="btn-group">
+          <a href="#price" class="btn btn-light">参加料金を見る</a>
+          <a href="#activities" class="btn btn-primary">活動内容を見る</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-label">About</div>
+        <h2 class="section-title">アカモンコミュニティとは</h2>
+        <p class="section-description">
+          アカモンコミュニティは、アートを起点にしながらも、それだけに閉じない
+          “思考と実践の場”です。感性を磨くこと、問いを持つこと、自分の言葉で考えること、
+          そしてそれを行動へ落とし込むことを大切にしています。
+        </p>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3>このコミュニティの目的</h3>
+            <p>
+              価値観のアップデート、創造性の刺激、そして自分自身の再定義。
+              アカモンコミュニティは、情報を受け取るだけの場所ではなく、
+              参加者一人ひとりが思考し、発信し、つながることで成長していくことを目指します。
+            </p>
+          </div>
+          <div class="panel">
+            <h3>こんな人に向いています</h3>
+            <p>
+              アート・カルチャー・思想に興味がある人。<br>
+              村上隆の考え方や仕事観に触れたい人。<br>
+              AIや英語など、実践的な学びを生活に取り入れたい人。<br>
+              今の自分を一段階アップデートするきっかけが欲しい人。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="navigated" class="dark-section">
+      <div class="container">
+        <div class="section-label">Navigated by</div>
+        <h2 class="section-title">Navigated by 村上隆</h2>
+        <p class="section-description">
+          このコミュニティは、村上隆の視点・思考・問いを一つの羅針盤として進んでいきます。
+          単なる成功談ではなく、失敗、逆境、戦略、表現、社会との向き合い方までを含めた
+          “生きた知性”に触れることができる設計です。
+        </p>
+
+        <div class="grid-3">
+          <div class="card dark-card">
+            <div class="card-number">01</div>
+            <h3>思考を拡張する視点</h3>
+            <p>
+              美術、社会、ビジネス、歴史、カルチャーを横断する視点から、
+              自分の見ている世界を広げていくためのきっかけを得ます。
+            </p>
+          </div>
+          <div class="card dark-card">
+            <div class="card-number">02</div>
+            <h3>戦略としての表現</h3>
+            <p>
+              表現は感性だけではなく、届け方・構造・文脈まで含めて設計される。
+              その発想に触れることで、発信や仕事の精度を高めていきます。
+            </p>
+          </div>
+          <div class="card dark-card">
+            <div class="card-number">03</div>
+            <h3>逆境を意味に変える力</h3>
+            <p>
+              挫折や批判をただのマイナスで終わらせず、
+              次の価値へ変換していくための姿勢と考え方を学びます。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="activities">
+      <div class="container">
+        <div class="section-label">Activities</div>
+        <h2 class="section-title">学び、対話し、つながるための5つのアクティビティ</h2>
+        <p class="section-description">
+          アカモンコミュニティでは、インプットだけで終わらず、
+          実際に使い、考え、つながることを通して成長できる環境を設計しています。
+          オンラインとオフラインを横断しながら、日常に変化を生み出していきます。
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-number">Activity 01</div>
+            <h3>週1回のAI活用講座（動画配信）</h3>
+            <p>
+              毎週1回、AIの実践的な活用方法を学べる講座動画を配信。
+              仕事・発信・思考整理などに直結する形で、
+              “使えるAIスキル”を継続的に身につけていきます。
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">Activity 02</div>
+            <h3>月1回の読書会</h3>
+            <p>
+              テーマに沿った読書会を通じて、
+              思考を深め、自分の言葉でアウトプットする力を養います。
+              他者の視点に触れることで、理解の解像度を高めます。
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">Activity 03</div>
+            <h3>月1回のアカモンナイト（食事会）</h3>
+            <p>
+              誰でも参加可能なオフライン交流イベント。
+              無料で参加できる食事会を通じて、
+              コミュニティ内外の人と自然につながる機会を提供します。
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">Activity 04</div>
+            <h3>月1回のオンライン英会話（30分）</h3>
+            <p>
+              月に1回、30分のオンライン英会話セッションを実施。
+              学んだ知識を実際に使う機会をつくり、
+              グローバルな視点とコミュニケーション力を高めていきます。
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">Activity 05</div>
+            <h3>3ヶ月に1回の村上隆さんとのオンライン交流会</h3>
+            <p>
+              村上隆さんと直接つながる特別なオンライン交流会。
+              普段の発信やコンテンツだけでは得られないリアルな視点や言葉に触れ、
+              思考と行動のレベルを引き上げる機会となります。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits" class="dark-section">
+      <div class="container">
+        <div class="section-label">Benefits</div>
+        <h2 class="section-title">アカモンコミュニティで得られること</h2>
+        <p class="section-description">
+          目に見える知識だけではなく、思考の深さ、問いの質、
+          自分の立ち位置の解像度が上がっていくことが、この場の価値です。
+          スキル・思考・実践・人脈・視座が、バランスよく育っていきます。
+        </p>
+
+        <div class="grid-3">
+          <div class="card dark-card">
+            <div class="card-number">Benefit 01</div>
+            <h3>AIを使いこなす実践力</h3>
+            <p>
+              仕事や発信、企画、学習にそのまま活かせるAI活用の土台が身につきます。
+            </p>
+          </div>
+          <div class="card dark-card">
+            <div class="card-number">Benefit 02</div>
+            <h3>思考を深める習慣</h3>
+            <p>
+              読書会や対話を通して、表面的な理解で終わらない“考える力”が磨かれます。
+            </p>
+          </div>
+          <div class="card dark-card">
+            <div class="card-number">Benefit 03</div>
+            <h3>人とのつながり</h3>
+            <p>
+              アカモンナイトや交流の場を通じて、価値観の近い仲間と自然につながれます。
+            </p>
+          </div>
+          <div class="card dark-card">
+            <div class="card-number">Benefit 04</div>
+            <h3>英語を使う一歩目</h3>
+            <p>
+              月1回の英会話で、知識だけでなく実際に使う感覚を少しずつ養えます。
+            </p>
+          </div>
+          <div class="card dark-card">
+            <div class="card-number">Benefit 05</div>
+            <h3>村上隆の視点に触れる機会</h3>
+            <p>
+              トップレベルの表現者の思考や言葉に触れることで、自分の視座が引き上がります。
+            </p>
+          </div>
+          <div class="card dark-card">
+            <div class="card-number">Benefit 06</div>
+            <h3>自分の言葉が育つ</h3>
+            <p>
+              他者の答えをなぞるのではなく、自分の問いと自分の表現を持てるようになります。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="murakami">
+      <div class="container">
+        <div class="section-label">Profile</div>
+        <h2 class="section-title">村上隆の紹介</h2>
+        <p class="section-description">
+          世界を舞台に活躍する現代美術家であり、アート、ビジネス、カルチャーを横断する稀有な存在。
+          表現者であると同時に、戦略家としての視点も持ち合わせています。
+        </p>
+
+        <div class="profile">
+          <div class="profile-image"></div>
+
+          <div class="profile-box">
+            <h3>村上隆</h3>
+            <div class="profile-role">現代美術家 / アーティスト / 起業家</div>
+            <p>
+              日本発のカルチャーを世界の文脈へ接続し、
+              独自の理論と表現によってグローバルな評価を確立。
+              美術館、ブランド、音楽、ファッションなど幅広い領域で活動し続けています。
+            </p>
+            <p>
+              その魅力は作品だけではなく、
+              失敗や逆境を含めて意味に変えていく思考法、
+              そして表現を社会へ実装していく圧倒的な実行力にあります。
+            </p>
+            <p>
+              アカモンコミュニティでは、そうした村上隆の視点・思考・問いを、
+              学びと実践の羅針盤として共有していきます。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="price">
+      <div class="container">
+        <div class="section-label">Price</div>
+        <h2 class="section-title">参加料金</h2>
+        <p class="section-description">
+          アカモンコミュニティは、より多くの人が学び、つながり、行動できる場を目指し、
+          参加しやすい価格設計にしています。
+        </p>
+
+        <div class="price-wrap">
+          <div class="price-card">
+            <h3>社会人プラン</h3>
+            <div class="price">¥5,000 <small>/ 月</small></div>
+            <p>社会人としてスキル・思考・人脈を広げたい方に向けたプランです。</p>
+
+            <ul class="price-list">
+              <li>週1回のAI活用講座（動画配信）</li>
+              <li>月1回の読書会参加</li>
+              <li>月1回のアカモンナイト参加</li>
+              <li>月1回のオンライン英会話（30分）</li>
+              <li>村上隆さんとのオンライン交流会（3ヶ月に1回）</li>
+            </ul>
+
+            <a href="#" class="btn btn-primary">参加する</a>
+          </div>
+
+          <div class="price-card">
+            <h3>学生プラン</h3>
+            <div class="price">¥500 <small>/ 月</small></div>
+            <p>学びの機会を広げたい学生向けの特別プランです。</p>
+
+            <ul class="price-list">
+              <li>週1回のAI活用講座（動画配信）</li>
+              <li>月1回の読書会参加</li>
+              <li>月1回のアカモンナイト参加</li>
+              <li>月1回のオンライン英会話（30分）</li>
+              <li>村上隆さんとのオンライン交流会（3ヶ月に1回）</li>
+            </ul>
+
+            <a href="#" class="btn btn-primary">参加する</a>
+          </div>
+        </div>
+
+        <div class="note-box">
+          <h3>補足</h3>
+          <p>
+            ・入会後すぐにコミュニティの活動へ参加できます。<br>
+            ・イベントの詳細はコミュニティ内でご案内します。<br>
+            ・アカモンナイトは無料で参加可能なオフラインイベントです。<br>
+            ・学生プランは在学中の方が対象です。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta-box">
+          <h2>学び、考え、つながる。<br>その一歩を、ここから。</h2>
+          <p>
+            アカモンコミュニティは、知識だけではなく、
+            思考・実践・交流を通じて自分を更新していくための場です。
+            興味を持った方は、ぜひ参加をご検討ください。
+          </p>
+          <a href="#price" class="btn btn-primary">今すぐ参加を検討する</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 AKAMON COMMUNITY. All Rights Reserved.
+    </div>
+  </footer>
+</body>
+</html>
